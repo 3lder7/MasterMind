@@ -7,7 +7,7 @@ public class mastermind {
 		int[] senha = new int [4];
 		int cont =1;
 		preencher(senha);
-		
+
 		while(cont <= 3){
 			String resposta = iniciar(senha);
 			verificar(resposta, senha);
@@ -19,7 +19,7 @@ public class mastermind {
 	public static void preencher (int[] vetorsenha) {
 		Random rand = new Random();
 		for(int i = 0; i < vetorsenha.length; i++){
-			vetorsenha[i] = rand.nextInt(6);
+			vetorsenha[i] = rand.nextInt(1, 7);
 		}
 		System.out.println(Arrays.toString(vetorsenha));//TEMPORARIO PARA FIM DE TESTES (exibe a senha)
 	}
