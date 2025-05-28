@@ -7,7 +7,7 @@ public class mastermind {
 		int[] senha = new int [4];
 		int cont =1;
 		preencher(senha);
-	// elder e gay
+		
 		while(cont <= 3){
 			String resposta = iniciar(senha);
 			verificar(resposta, senha);
