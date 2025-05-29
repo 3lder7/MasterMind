@@ -4,16 +4,19 @@ import java.util.Scanner;
 import java.util.Arrays;//TEMPORARIO PARA FIM DE TESTES (exibe a senha)
 public class mastermind {
 	public static void main(String[] args) {
+		Scanner kb = new Scanner(System.in);
 		int[] senha = new int [4];
-		int cont =1;
+		int cont = 1;
 		preencher(senha);
 
 		while(cont <= 3){
-			String resposta = iniciar(senha);
-			verificar(resposta, senha);
+			String resposta = iniciar(senha, kb);
+			verificar(resposta, senha, kb);
 			comparar(resposta, senha);
 			cont++;
 		}
+		System.out.println("Você atingiu o número máximo de tentativas.");
+		kb.close();
 	}
 	
 	public static void preencher (int[] vetorsenha) {
@@ -24,17 +27,14 @@ public class mastermind {
 		System.out.println(Arrays.toString(vetorsenha));//TEMPORARIO PARA FIM DE TESTES (exibe a senha)
 	}
 
-	public static String iniciar(int[] senha){
-		Scanner kb = new Scanner(System.in);
+	public static String iniciar(int[] senha, Scanner kb) {
 		String resposta;
 		System.out.println("Digite uma senha de até 4 dígitos e com números entre 1 e 6 (sem espaços)");
 		resposta = kb.nextLine();
-		kb.close();
 		return resposta;
 	}
 
-	public static String verificar(String resposta, int[] senha){
-		Scanner kb = new Scanner(System.in);
+	public static String verificar(String resposta, int[] senha, Scanner kb) {
 		while(resposta.length() != senha.length){
 			System.out.println("Quantidade de dígitos incorreta, tente novamente.");
 			resposta = kb.nextLine();
@@ -47,11 +47,16 @@ public class mastermind {
 				resposta = kb.nextLine();
 			}
 		}
-		kb.close();
 		return resposta;
 	}
-
-	public static void comparar(String resposta, int[] senha){
-		
+	public static void comparar(String resposta, int[] senha) {
+		int corretos = 0;
+		for(int i = 0; i < resposta.length(); i++) {
+			int digit = resposta.charAt(i) - '0';
+			if (digit == senha[i]) {
+				corretos++;
+			}
+		}
+		System.out.println("Dígitos na posição correta: " + corretos);
 	}
 }
