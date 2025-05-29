@@ -6,14 +6,15 @@ public class mastermind {
 	public static void main(String[] args) {
 		Scanner kb = new Scanner(System.in);
 		int[] senha = new int [4];
-		int cont = 1;
+		int cont = 10;
 		preencher(senha);
 
-		while(cont <= 3){
+		while(cont >= 0){
 			String resposta = iniciar(senha, kb);
 			verificar(resposta, senha, kb);
 			comparar(resposta, senha);
-			cont++;
+			cont--;
+			System.out.println("Tentativas restantes: " + cont);
 		}
 		System.out.println("Você atingiu o número máximo de tentativas.");
 		kb.close();
