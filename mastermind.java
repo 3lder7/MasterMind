@@ -1,17 +1,18 @@
 
 import java.util.Random;
 import java.util.Scanner;
-import java.util.Arrays;//TEMPORARIO PARA FIM DE TESTES (exibe a senha)
+import java.util.Arrays; // TEMPORARIO PARA FIM DE TESTES (exibe a senha)
+
 public class mastermind {
 	public static void main(String[] args) {
 		Scanner kb = new Scanner(System.in);
-		int[] senha = new int [4];
+		int[] senha = new int[4];
 		int cont = 10;
 		preencher(senha);
 
-		while(cont >= 0){
+		while (cont > 0) {
 			String resposta = iniciar(senha, kb);
-			verificar(resposta, senha, kb);
+			resposta = verificar(resposta, senha, kb);
 			comparar(resposta, senha);
 			cont--;
 			System.out.println("Tentativas restantes: " + cont);
@@ -19,20 +20,18 @@ public class mastermind {
 		System.out.println("Você atingiu o número máximo de tentativas.");
 		kb.close();
 	}
-	
-	public static void preencher (int[] vetorsenha) {
+
+	public static void preencher(int[] vetorsenha) {
 		Random rand = new Random();
-		for(int i = 0; i < vetorsenha.length; i++){
-			vetorsenha[i] = rand.nextInt(1, 7);
+		for (int i = 0; i < vetorsenha.length; i++) {
+			vetorsenha[i] = rand.nextInt(6) + 1;
 		}
-		System.out.println(Arrays.toString(vetorsenha));//TEMPORARIO PARA FIM DE TESTES (exibe a senha)
+		System.out.println(Arrays.toString(vetorsenha)); // TEMPORARIO PARA FIM DE TESTES (exibe a senha)
 	}
 
 	public static String iniciar(int[] senha, Scanner kb) {
-		String resposta;
 		System.out.println("Digite uma senha de até 4 dígitos e com números entre 1 e 6 (sem espaços)");
-		resposta = kb.nextLine();
-		return resposta;
+		return kb.nextLine();
 	}
 
 	public static String verificar(String resposta, int[] senha, Scanner kb) {
@@ -50,14 +49,36 @@ public class mastermind {
 		}
 		return resposta;
 	}
+
+
 	public static void comparar(String resposta, int[] senha) {
 		int corretos = 0;
-		for(int i = 0; i < resposta.length(); i++) {
+		int deslocados = 0;
+		int[] digitosenha = new int[7];
+		int[] digitoresposta = new int[7];
+
+		for (int i = 0; i < resposta.length(); i++) {
 			int digit = resposta.charAt(i) - '0';
 			if (digit == senha[i]) {
 				corretos++;
 			}
+			digitosenha[senha[i]]++;
+			digitoresposta[digit]++;
 		}
+
+		int comum = 0;
+		for (int i = 1; i <= 6; i++) {
+			int min;
+			if (digitosenha[i] < digitoresposta[i]) {
+				min = digitosenha[i];
+			} else {
+				min = digitoresposta[i];
+			}
+			comum += min;
+		}
+		deslocados = comum - corretos;
+
+		System.out.println("Dígitos deslocados: " + deslocados);
 		System.out.println("Dígitos na posição correta: " + corretos);
 	}
 }
