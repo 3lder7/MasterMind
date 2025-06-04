@@ -1,23 +1,52 @@
 
 import java.util.Random;
 import java.util.Scanner;
-import java.util.Arrays; // TEMPORARIO PARA FIM DE TESTES (exibe a senha)
 
 public class mastermind {
 	public static void main(String[] args) {
 		Scanner kb = new Scanner(System.in);
-		int[] senha = new int[4];
-		int cont = 10;
-		preencher(senha);
-
-		while (cont > 0) {
-			String resposta = iniciar(senha, kb);
-			resposta = verificar(resposta, senha, kb);
-			comparar(resposta, senha);
-			cont--;
-			System.out.println("Tentativas restantes: " + cont);
+		char restart;
+		do {
+			int[] senha = new int[4];
+			int cont = 10;
+			preencher(senha);
+			boolean senhaValida = false;
+			
+			while (cont > 0 && senhaValida == false) {
+				String resposta = iniciar(senha, kb);
+				resposta = verificar(resposta, senha, kb);
+				int corretos = comparar(resposta, senha);
+				if (corretos == 4) {
+					System.out.println("Parabéns!!! Você acertou a senha e completou o jogo!");
+					senhaValida = true;
+					System.out.print("A senha era: ");
+					for(int i= 0; i<senha.length; i++) {
+						System.out.print(senha[i]);
+					}
+					System.out.println();
+				}else {
+					cont--;
+				System.out.println("\nSENHA INCORRETA!");
+				System.out.println("Tentativas restantes: " + cont);
+				}
+			}
+		
+		System.out.println("Você atingiu o número máximo de tentativas!\n");
+		System.out.print("A senha era: ");
+		for(int i= 0; i<senha.length; i++) {
+			System.out.print(senha[i]);
 		}
-		System.out.println("Você atingiu o número máximo de tentativas.");
+		
+		System.out.println("\nGostaria de realizar outra tentativa? (S-Sim/N-Não)");
+		restart = kb.next().toUpperCase().charAt(0);
+
+		while (restart != 'S' && restart !='N') {
+			System.out.println("ERRO! Digite 'S' para 'Sim' ou 'N' para Não:");
+			restart = kb.next().toUpperCase().charAt(0);
+		}
+		}while(restart == 'S');
+
+		System.out.println("\nObrigado por participar!");
 		kb.close();
 	}
 
@@ -26,11 +55,10 @@ public class mastermind {
 		for (int i = 0; i < vetorsenha.length; i++) {
 			vetorsenha[i] = rand.nextInt(6) + 1;
 		}
-		System.out.println(Arrays.toString(vetorsenha)); // TEMPORARIO PARA FIM DE TESTES (exibe a senha)
 	}
 
 	public static String iniciar(int[] senha, Scanner kb) {
-		System.out.println("Digite uma senha de até 4 dígitos e com números entre 1 e 6 (sem espaços)");
+		System.out.println("\nDigite uma senha de até 4 dígitos e com números entre 1 e 6 (sem espaços)");
 		return kb.nextLine();
 	}
 
@@ -51,7 +79,7 @@ public class mastermind {
 	}
 
 
-	public static void comparar(String resposta, int[] senha) {
+	public static int comparar(String resposta, int[] senha) {
 		int corretos = 0;
 		int deslocados = 0;
 		int[] digitosenha = new int[7];
@@ -78,7 +106,8 @@ public class mastermind {
 		}
 		deslocados = comum - corretos;
 
-		System.out.println("Dígitos deslocados: " + deslocados);
+		System.out.println("Dígitos corretos fora de posição: " + deslocados);
 		System.out.println("Dígitos na posição correta: " + corretos);
+		return corretos;
 	}
 }
