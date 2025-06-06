@@ -6,19 +6,20 @@ public class mastermind {
 	public static void main(String[] args) {
 		Scanner kb = new Scanner(System.in);
 		char restart;
+
 		do {
 			int[] senha = new int[4];
 			int cont = 10;
 			preencher(senha);
-			boolean senhaValida = false;
+			boolean validar = false;
 			
-			while (cont > 0 && senhaValida == false) {
+			while (cont > 0 && validar == false) {
 				String resposta = iniciar(senha, kb);
 				resposta = verificar(resposta, senha, kb);
 				int corretos = comparar(resposta, senha);
 				if (corretos == 4) {
 					System.out.println("Parabéns!!! Você acertou a senha e completou o jogo!");
-					senhaValida = true;
+					validar = true;
 					System.out.print("A senha era: ");
 					for(int i= 0; i<senha.length; i++) {
 						System.out.print(senha[i]);
@@ -26,24 +27,24 @@ public class mastermind {
 					System.out.println();
 				}else {
 					cont--;
-				System.out.println("\nSENHA INCORRETA!");
-				System.out.println("Tentativas restantes: " + cont);
+					System.out.println("\nSENHA INCORRETA!");
+					System.out.println("Tentativas restantes: " + cont);
 				}
 			}
 		
-		System.out.println("Você atingiu o número máximo de tentativas!\n");
-		System.out.print("A senha era: ");
-		for(int i= 0; i<senha.length; i++) {
-			System.out.print(senha[i]);
-		}
+			System.out.println("Você atingiu o número máximo de tentativas!\n");
+			System.out.print("A senha era: ");
+			for(int i= 0; i<senha.length; i++) {
+				System.out.print(senha[i]);
+			}
 		
-		System.out.println("\nGostaria de realizar outra tentativa? (S-Sim/N-Não)");
-		restart = kb.next().toUpperCase().charAt(0);
-
-		while (restart != 'S' && restart !='N') {
-			System.out.println("ERRO! Digite 'S' para 'Sim' ou 'N' para Não:");
+			System.out.println("\nGostaria de realizar outra tentativa? (S-Sim/N-Não)");
 			restart = kb.next().toUpperCase().charAt(0);
-		}
+			while (restart != 'S' && restart !='N') {
+				System.out.println("ERRO! Digite 'S' para 'Sim' ou 'N' para Não:");
+				restart = kb.next().toUpperCase().charAt(0);
+			}
+
 		}while(restart == 'S');
 
 		System.out.println("\nObrigado por participar!");
@@ -77,7 +78,6 @@ public class mastermind {
 		}
 		return resposta;
 	}
-
 
 	public static int comparar(String resposta, int[] senha) {
 		int corretos = 0;
