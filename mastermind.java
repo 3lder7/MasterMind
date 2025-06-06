@@ -7,6 +7,11 @@ public class mastermind {
 		Scanner kb = new Scanner(System.in);
 		char restart;
 
+		System.out.println("===== MASTERMIND =====");
+		System.out.println("Você tem 10 tentativas para descobrir a senha.");
+		System.out.println("A senha é composta por 4 dígitos, podendo ser números naturais de 1 a 6 (sem espaços) e os números podem aparecer mais de uma vez na senha.");
+		System.out.println("A cada tentativa, você receberá um retorno sobre quantos dígitos estão corretos e quantos estão fora de posição.");
+
 		do {
 			int[] senha = new int[4];
 			int cont = 10;
@@ -18,9 +23,8 @@ public class mastermind {
 				resposta = verificar(resposta, senha, kb);
 				int corretos = comparar(resposta, senha);
 				if (corretos == 4) {
-					System.out.println("Parabéns!!! Você acertou a senha e completou o jogo!");
+					System.out.println("\nParabéns!!! Você acertou a senha e completou o jogo!");
 					validar = true;
-					System.out.print("A senha era: ");
 					for(int i= 0; i<senha.length; i++) {
 						System.out.print(senha[i]);
 					}
@@ -32,7 +36,7 @@ public class mastermind {
 				}
 			}
 		
-			System.out.println("Você atingiu o número máximo de tentativas!\n");
+			System.out.println("FIM DE JOGO!");
 			System.out.print("A senha era: ");
 			for(int i= 0; i<senha.length; i++) {
 				System.out.print(senha[i]);
@@ -59,7 +63,7 @@ public class mastermind {
 	}
 
 	public static String iniciar(int[] senha, Scanner kb) {
-		System.out.println("\nDigite uma senha de até 4 dígitos e com números entre 1 e 6 (sem espaços)");
+		System.out.println("\nDigite uma senha:");
 		return kb.nextLine();
 	}
 
@@ -105,8 +109,8 @@ public class mastermind {
 			comum += min;
 		}
 		deslocados = comum - corretos;
-
-		System.out.println("Dígitos corretos fora de posição: " + deslocados);
+                
+		System.out.println("\nDígitos corretos fora de posição: " + deslocados);
 		System.out.println("Dígitos na posição correta: " + corretos);
 		return corretos;
 	}
